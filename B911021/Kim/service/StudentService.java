@@ -1,4 +1,4 @@
-package B911021.Kim.Service;
+package B911021.Kim.service;
 
 import B911021.Kim.dto.StudentDto;
 import B911021.Kim.entity.Student;
@@ -24,11 +24,7 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public Student updateStudent(StudentDto studentDto) {
-        Optional<Student> byStudentNumber = studentRepository.findByStudentNumber(studentDto.getStudentNumber());
-    }
-
-//    private validateDuplicateStudent() {
-//
+//    public Student updateStudent(StudentDto studentDto) {
+//        Optional<Student> byStudentNumber = studentRepository.findByStudentNumber(studentDto.getStudentNumber());
 //    }
 }
