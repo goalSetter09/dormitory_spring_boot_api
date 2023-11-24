@@ -34,4 +34,15 @@ public class StudentService {
             throw new NullPointerException();
         }
     }
+
+    public String deleteStudent(String studentNumber) {
+        Optional<Student> byStudentNumber = studentRepository.findByStudentNumber(studentNumber);
+        if (byStudentNumber.isPresent()) {
+            Student student = byStudentNumber.get();
+            studentRepository.delete(student);
+            return student.getStudentNumber();
+        } else {
+            throw new NullPointerException();
+        }
+    }
 }
