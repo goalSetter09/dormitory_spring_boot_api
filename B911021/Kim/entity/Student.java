@@ -49,4 +49,12 @@ public class Student {
                 studentDto.getPhone(),
                 studentDto.getRoomNum());
     }
+
+    //학생정보 수정 매서드
+    public Student updateStudent(StudentDto studentDto) {
+        this.name = studentDto.getName();
+        this.phone = studentDto.getPhone();
+        this.roomNum = studentDto.getRoomNum();
+        return this;
+    }
 }

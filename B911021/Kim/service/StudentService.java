@@ -24,7 +24,14 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-//    public Student updateStudent(StudentDto studentDto) {
-//        Optional<Student> byStudentNumber = studentRepository.findByStudentNumber(studentDto.getStudentNumber());
-//    }
+    public Student updateStudent(StudentDto studentDto) {
+        Optional<Student> byStudentNumber = studentRepository.findByStudentNumber(studentDto.getStudentNumber());
+
+        if (byStudentNumber.isPresent()) {
+            Student student = byStudentNumber.get();
+            return student.updateStudent(studentDto);
+        } else {
+            throw new NullPointerException();
+        }
+    }
 }
