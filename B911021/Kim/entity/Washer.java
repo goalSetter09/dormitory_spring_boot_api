@@ -34,4 +34,8 @@ public class Washer {
         this.number = number;
         this.available = available;
     }
+
+    public void updateAvailable(boolean available) {
+        this.available = available;
+    }
 }
