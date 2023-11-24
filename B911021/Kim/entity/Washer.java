@@ -16,8 +16,10 @@ public class Washer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "did")
     private int id;
+
+    @Column(name = "wid")
+    private int number;
 
     @Column
     private boolean available;
@@ -28,7 +30,8 @@ public class Washer {
     @OneToMany(mappedBy = "washer", cascade = CascadeType.ALL)
     private List<WasherReservation> washerReservations = new ArrayList<>();
 
-    public Washer(boolean available) {
+    public Washer(int number, boolean available) {
+        this.number = number;
         this.available = available;
     }
 }

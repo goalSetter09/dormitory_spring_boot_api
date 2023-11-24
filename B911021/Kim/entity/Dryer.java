@@ -15,8 +15,10 @@ public class Dryer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "did")
     private int id;
+
+    @Column(name = "did")
+    private int number;
 
     @Column
     private boolean available;
@@ -28,7 +30,7 @@ public class Dryer {
     private List<DryerReservation> dryerReservations = new ArrayList<>();
 
 
-    public Dryer(boolean available) {
+    public Dryer(int number, boolean available) {
         this.available = available;
     }
 }

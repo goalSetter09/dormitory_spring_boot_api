@@ -5,4 +5,6 @@
 //@Data
 //public class CreateWasherDto {
 //
+//    String
+//
 //}
