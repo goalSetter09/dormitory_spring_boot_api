@@ -34,5 +34,7 @@ public class WasherReservation {
         this.washer = washer;
         student.getWasherReservations().add(this);
         washer.getWasherReservations().add(this);
+        washer.updateAvailable(false);
+        student.updateStudentStatusToRESERVE();
     }
 }

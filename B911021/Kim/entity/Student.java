@@ -30,6 +30,9 @@ public class Student {
     @Column(name = "room_number")
     private int roomNum;
 
+    @Enumerated(EnumType.STRING)
+    private StudentStatus status; // 학생상태 [NONE, RESERVE]
+
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<DryerReservation> dryerReservations = new ArrayList<>();
 
@@ -56,5 +59,19 @@ public class Student {
         this.phone = studentDto.getPhone();
         this.roomNum = studentDto.getRoomNum();
         return this;
+    }
+
+    //학생의 상태를 예약중으로 변경
+    public void updateStudentStatusToRESERVE() {
+        this.status = StudentStatus.RESERVE;
+    }
+
+    //예약 취소 매서드
+    public void cancelWasherReservation(WasherReservation washerReservation) {
+        if(this.status != StudentStatus.RESERVE) {
+            throw new IllegalStateException("예약중인 상태가 아닙니다.");
+        }
+        this.status = StudentStatus.NONE;
+        this.washerReservations.remove(washerReservation);
     }
 }

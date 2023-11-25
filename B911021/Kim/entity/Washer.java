@@ -38,4 +38,13 @@ public class Washer {
     public void updateAvailable(boolean available) {
         this.available = available;
     }
+
+    //비지니스 로직
+    public void cancel(WasherReservation washerReservation) {
+        if (this.available) {
+            throw new IllegalStateException("예약되지 않은 세탁기입니다.");
+        }
+        updateAvailable(true);
+        this.washerReservations.remove(washerReservation);
+    }
 }
