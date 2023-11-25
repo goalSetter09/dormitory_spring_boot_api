@@ -31,7 +31,10 @@ public class Student {
     private int roomNum;
 
     @Enumerated(EnumType.STRING)
-    private StudentStatus status; // 학생상태 [NONE, RESERVE]
+    private WasherStudentStatus washerStudentStatus; // 세탁기에 대한 학생상태 [NONE, RESERVE]
+
+    @Enumerated(EnumType.STRING)
+    private DryerStudentStatus dryerStudentStatus; // 세탁기에 대한 학생상태 [NONE, RESERVE]
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<DryerReservation> dryerReservations = new ArrayList<>();
@@ -62,16 +65,27 @@ public class Student {
     }
 
     //학생의 상태를 예약중으로 변경
-    public void updateStudentStatusToRESERVE() {
-        this.status = StudentStatus.RESERVE;
+    public void updateWasherStudentStatusToRESERVE() {
+        this.washerStudentStatus = washerStudentStatus.RESERVE;
+    }
+    public void updateDryerStudentStatusToRESERVE() {
+        this.dryerStudentStatus = dryerStudentStatus.RESERVE;
     }
 
     //예약 취소 매서드
     public void cancelWasherReservation(WasherReservation washerReservation) {
-        if(this.status != StudentStatus.RESERVE) {
+        if(this.washerStudentStatus != washerStudentStatus.RESERVE) {
             throw new IllegalStateException("예약중인 상태가 아닙니다.");
         }
-        this.status = StudentStatus.NONE;
+        this.washerStudentStatus = washerStudentStatus.NONE;
         this.washerReservations.remove(washerReservation);
+    }
+
+    public void cancelDryerReservation(DryerReservation dryerReservation) {
+        if(this.dryerStudentStatus != dryerStudentStatus.RESERVE) {
+            throw new IllegalStateException("예약중인 상태가 아닙니다.");
+        }
+        this.dryerStudentStatus = dryerStudentStatus.NONE;
+        this.dryerReservations.remove(dryerReservation);
     }
 }

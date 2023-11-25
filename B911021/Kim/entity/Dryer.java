@@ -33,4 +33,17 @@ public class Dryer {
     public Dryer(int number, boolean available) {
         this.available = available;
     }
+
+    public void updateAvailable(boolean available) {
+        this.available = available;
+    }
+
+    //비지니스 로직
+    public void cancel(DryerReservation dryerReservation) {
+        if (this.available) {
+            throw new IllegalStateException("예약되지 않은 건조기입니다.");
+        }
+        updateAvailable(true);
+        this.dryerReservations.remove(dryerReservation);
+    }
 }

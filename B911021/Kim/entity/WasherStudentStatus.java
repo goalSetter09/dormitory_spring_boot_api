@@ -1,5 +1,5 @@
 package B911021.Kim.entity;
 
-public enum StudentStatus {
+public enum WasherStudentStatus {
     NONE, RESERVE
 }

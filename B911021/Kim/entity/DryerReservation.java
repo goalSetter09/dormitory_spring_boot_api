@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -34,6 +32,8 @@ public class DryerReservation {
         this.student = student;
         this.dryer = dryer;
         student.getDryerReservations().add(this);
+        student.updateDryerStudentStatusToRESERVE();
         dryer.getDryerReservations().add(this);
+        dryer.updateAvailable(false);
     }
 }

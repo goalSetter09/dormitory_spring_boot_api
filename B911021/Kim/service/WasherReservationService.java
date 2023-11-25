@@ -20,6 +20,7 @@ public class WasherReservationService {
 
     public WasherReservation reserveWasher(Student student, Washer washer) {
         if(washer.isAvailable()) {
+            //WasherReservation 실행 시 학생이랑 워셔 상태 다 업데이트 됨
             WasherReservation washerReservation = new WasherReservation(LocalDateTime.now(), student, washer);
             return washerReservationRepository.save(washerReservation);
         } else {

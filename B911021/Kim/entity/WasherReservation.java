@@ -1,7 +1,6 @@
 package B911021.Kim.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -33,8 +32,8 @@ public class WasherReservation {
         this.student = student;
         this.washer = washer;
         student.getWasherReservations().add(this);
+        student.updateWasherStudentStatusToRESERVE();
         washer.getWasherReservations().add(this);
         washer.updateAvailable(false);
-        student.updateStudentStatusToRESERVE();
     }
 }
