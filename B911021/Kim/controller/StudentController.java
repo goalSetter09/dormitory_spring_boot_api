@@ -81,18 +81,3 @@ public class StudentController {
         }
     }
 }
-
-
-
-/*
-        private String studentNumber;
-        private String name;
-        private String phone;
-        private int roomNum;
-    {
-        "studentNumber" : "B911021",
-        "name" : "김동영",
-        "phone" : "010-9057-0578",
-        "roomNum" : 1027"
-    }
- */

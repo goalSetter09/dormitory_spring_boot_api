@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -43,6 +44,15 @@ public class WasherService {
             return deleteWasher.getNumber();
         } else {
             throw new NullPointerException();
+        }
+    }
+
+    public Washer findByWasherNumber(int number) {
+        Optional<Washer> byNumber = washerRepository.findByNumber(number);
+        if(byNumber.isPresent()) {
+            return byNumber.get();
+        } else {
+            throw new NoSuchElementException();
         }
     }
 

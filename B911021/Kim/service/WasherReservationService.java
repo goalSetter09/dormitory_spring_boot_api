@@ -1,5 +1,6 @@
 package B911021.Kim.service;
 
+import B911021.Kim.entity.ReservationStatus;
 import B911021.Kim.entity.Student;
 import B911021.Kim.entity.Washer;
 import B911021.Kim.entity.WasherReservation;
@@ -31,9 +32,10 @@ public class WasherReservationService {
 
     @Transactional
     public Washer cancelWasherReservation(Student student, Washer washer) {
-        Optional<WasherReservation> byStudentAndWasher = washerReservationRepository.findByStudentAndWasher(student, washer);
+        Optional<WasherReservation> byStudentAndWasher = washerReservationRepository.findByReservationStatusAndStudentAndWasher(ReservationStatus.RESERVED, student, washer);
         if (byStudentAndWasher.isPresent()) {
             WasherReservation washerReservation = byStudentAndWasher.get();
+            washerReservation.updateReservationStatusToCANCELED();
             student.cancelWasherReservation(washerReservation);
             washer.cancel(washerReservation);
             return washer;
@@ -41,6 +43,5 @@ public class WasherReservationService {
             throw new NoSuchElementException("해당 세탁기에 대한 예약이 존재하지 않습니다.");
         }
     }
-
 
 }

@@ -60,4 +60,13 @@ public class StudentService {
             throw new NullPointerException();
         }
     }
+
+    public Student findByStudentNumber(String studentNumber) {
+        Optional<Student> byStudentNumber = studentRepository.findByStudentNumber(studentNumber);
+        if (byStudentNumber.isPresent()) {
+            return byStudentNumber.get();
+        } else {
+            throw new NoSuchElementException();
+        }
+    }
 }
