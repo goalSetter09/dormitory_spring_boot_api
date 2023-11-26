@@ -2,6 +2,7 @@ package B911021.Kim.service;
 
 import B911021.Kim.entity.Dryer;
 import B911021.Kim.repository.DryerRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ public class DryerService {
 
     private final DryerRepository dryerRepository;
 
+    @Transactional
     public Dryer createDryer(int number) {
         if(validateDuplicatedDryer(number)) {
             Dryer dryer = new Dryer(number, true);
@@ -26,13 +28,10 @@ public class DryerService {
     //이미 같은 번호로 건조기가 존재하면 false 리턴
     private boolean validateDuplicatedDryer(int number) {
         Optional<Dryer> byNumber = dryerRepository.findByNumber(number);
-        if (byNumber.isPresent()) {
-            System.out.println("byNumber = " + byNumber.get().getNumber());
-            return false;
-        }
-        return true;
+        return byNumber.isEmpty();
     }
 
+    @Transactional
     public int deleteDryer(int number) {
         Optional<Dryer> byNumber = dryerRepository.findByNumber(number);
         if (byNumber.isPresent()) {

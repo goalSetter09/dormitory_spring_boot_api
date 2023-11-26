@@ -1,8 +1,8 @@
 package B911021.Kim.service;
 
-import B911021.Kim.entity.Dryer;
 import B911021.Kim.entity.Washer;
 import B911021.Kim.repository.WasherRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,7 @@ public class WasherService {
 
     private final WasherRepository washerRepository;
 
+    @Transactional
     public Washer createWasher(int number) {
         if (validateDuplicatedWasher(number)) {
             Washer washer = new Washer(number, true);
@@ -33,6 +34,7 @@ public class WasherService {
         return true;
     }
 
+    @Transactional
     public int deleteWasher(int number) {
         Optional<Washer> byNumber = washerRepository.findByNumber(number);
         if (byNumber.isPresent()) {

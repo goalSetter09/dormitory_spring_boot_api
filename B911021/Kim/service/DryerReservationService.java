@@ -2,7 +2,7 @@ package B911021.Kim.service;
 
 import B911021.Kim.entity.*;
 import B911021.Kim.repository.DryerReservationRepository;
-import B911021.Kim.repository.WasherReservationRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +16,7 @@ public class DryerReservationService {
 
     private final DryerReservationRepository dryerReservationRepository;
 
+    @Transactional
     public DryerReservation reserveDryer(Student student, Dryer dryer) {
         if(dryer.isAvailable()) {
             DryerReservation dryerReservation = new DryerReservation(LocalDateTime.now(), student, dryer);
@@ -25,6 +26,7 @@ public class DryerReservationService {
         }
     }
 
+    @Transactional
     public Dryer cancelDryerReservation(Student student, Dryer dryer) {
         Optional<DryerReservation> byStudentAndDryer = dryerReservationRepository.findByStudentAndDryer(student, dryer);
         if (byStudentAndDryer.isPresent()) {
