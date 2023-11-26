@@ -1,16 +1,16 @@
 package B911021.Kim.dto;
 
-import B911021.Kim.entity.Washer;
+import B911021.Kim.entity.Dryer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class WasherDto {
+public class DryerDto {
 
     private int number;
 
-    public WasherDto(Washer washer) {
-        this.number = washer.getNumber();
+    public DryerDto(Dryer dryer) {
+        this.number = dryer.getNumber();
     }
 }

@@ -15,8 +15,22 @@ public class DryerService {
     private final DryerRepository dryerRepository;
 
     public Dryer createDryer(int number) {
-        Dryer dryer = new Dryer(number, true);
-        return dryerRepository.save(dryer);
+        if(validateDuplicatedDryer(number)) {
+            Dryer dryer = new Dryer(number, true);
+            return dryerRepository.save(dryer);
+        } else {
+            throw new IllegalArgumentException("이미 존재하는 건조기입니다.");
+        }
+    }
+
+    //이미 같은 번호로 건조기가 존재하면 false 리턴
+    private boolean validateDuplicatedDryer(int number) {
+        Optional<Dryer> byNumber = dryerRepository.findByNumber(number);
+        if (byNumber.isPresent()) {
+            System.out.println("byNumber = " + byNumber.get().getNumber());
+            return false;
+        }
+        return true;
     }
 
     public int deleteDryer(int number) {

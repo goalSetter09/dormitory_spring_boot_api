@@ -1,7 +1,10 @@
 package B911021.Kim.controller;
 
+import B911021.Kim.dto.DryerDto;
 import B911021.Kim.dto.WasherDto;
+import B911021.Kim.entity.Dryer;
 import B911021.Kim.entity.Washer;
+import B911021.Kim.service.DryerService;
 import B911021.Kim.service.WasherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -17,41 +20,41 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/washer")
-public class WasherController {
+@RequestMapping("/dryer")
+public class DryerController {
 
-    private final WasherService washerService;
+    private final DryerService dryerService;
 
     @GetMapping("")
-    public List<WasherDto> getAvailableWashers() {
+    public List<DryerDto> getAvailableDryer() {
         try {
-            List<Washer> availableWashers = washerService.findAvailableWashers();
-            List<WasherDto> washerDtos = availableWashers.stream().map(washer -> new WasherDto(washer)).toList();
-            return washerDtos;
+            List<Dryer> availableWashers = dryerService.findAvailableDryers();
+            List<DryerDto> dryerDtos = availableWashers.stream().map(dryer -> new DryerDto(dryer)).toList();
+            return dryerDtos;
         } catch (IllegalStateException e) {
-            List<WasherDto> nullList = new ArrayList<>();
+            List<DryerDto> nullList = new ArrayList<>();
             return nullList;
         }
     }
 
     @PostMapping("/create")
-    public ResponseEntity<WasherDto> createWasher(@RequestBody int number) {
+    public ResponseEntity<DryerDto> createDryer(@RequestBody int number) {
         HttpHeaders headers= new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
         try {
-            washerService.createWasher(number);
+            dryerService.createDryer(number);
             return new ResponseEntity<>(headers, HttpStatus.CREATED);
-        } catch (IllegalArgumentException e) {
+        } catch(IllegalArgumentException e) {
             return new ResponseEntity<>(headers, HttpStatus.FORBIDDEN);
         }
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<WasherDto> deleteWasher(@RequestBody int number) {
+    public ResponseEntity<DryerDto> deleteWasher(@RequestBody int number) {
         HttpHeaders headers= new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
         try {
-            washerService.deleteWasher(number);
+            dryerService.deleteDryer(number);
             return new ResponseEntity<>(headers, HttpStatus.OK);
         } catch (NullPointerException e) {
             return new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);

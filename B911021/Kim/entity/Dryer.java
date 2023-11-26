@@ -31,6 +31,7 @@ public class Dryer {
 
 
     public Dryer(int number, boolean available) {
+        this.number = number;
         this.available = available;
     }
 
