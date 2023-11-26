@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 // remaining time
 
 @RestController
-@RequestMapping("/laundry")
+@RequestMapping("/")
 public class HomeController {
 
     @GetMapping("/")
@@ -19,7 +19,4 @@ public class HomeController {
     public String CreateWasher() {
         return "hello";
     }
-
-
-
 }

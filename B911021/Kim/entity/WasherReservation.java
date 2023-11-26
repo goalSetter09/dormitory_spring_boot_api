@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 public class WasherReservation {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "w_rid")
     private int id;
 
     @Column

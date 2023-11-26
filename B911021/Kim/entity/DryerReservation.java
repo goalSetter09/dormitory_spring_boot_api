@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 public class DryerReservation {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "d_rid")
     private int rid;
 
     @Column
