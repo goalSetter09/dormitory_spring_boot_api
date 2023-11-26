@@ -93,15 +93,3 @@ public class WasherController {
     }
 
 }
-
-//{
-//    "studentNumber": "B911021",
-//    "name": "김동영",
-//    "phone": "010-9057-0578",
-//    "roomNum": 1027
-//}
-
-//{
-//    "studentNumber": "B911021",
-//    "washerNumber": 1
-//}
