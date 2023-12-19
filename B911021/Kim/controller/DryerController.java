@@ -1,11 +1,12 @@
 package B911021.Kim.controller;
 
 import B911021.Kim.dto.DryerDto;
-import B911021.Kim.dto.WasherDto;
+import B911021.Kim.dto.DryerReservationDto;
 import B911021.Kim.entity.Dryer;
-import B911021.Kim.entity.Washer;
+import B911021.Kim.entity.Student;
+import B911021.Kim.service.DryerReservationService;
 import B911021.Kim.service.DryerService;
-import B911021.Kim.service.WasherService;
+import B911021.Kim.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,16 +17,18 @@ import org.springframework.web.bind.annotation.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/dryer")
 public class DryerController {
 
+    private final StudentService studentService;
     private final DryerService dryerService;
+    private final DryerReservationService dryerReservationService;
 
-    @GetMapping("")
+    @GetMapping("/list")
     public List<DryerDto> getAvailableDryer() {
         try {
             List<Dryer> availableWashers = dryerService.findAvailableDryers();
@@ -61,4 +64,31 @@ public class DryerController {
         }
     }
 
+    @PostMapping("/reserve")
+    public ResponseEntity<?> reserveDryer(@RequestBody DryerReservationDto dryerReservationDto) {
+        HttpHeaders headers= new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+        try {
+            Dryer dryer = dryerService.findByDryerNumber(dryerReservationDto.getDryerNumber());
+            Student student = studentService.findByStudentNumber(dryerReservationDto.getStudentNumber());
+            dryerReservationService.reserveDryer(student, dryer);
+            return new ResponseEntity<>(headers, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(headers, HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @DeleteMapping("/reserve/cancel")
+    public ResponseEntity<?> cancelWasherReservation(@RequestBody DryerReservationDto dryerReservationDto) {
+        HttpHeaders headers= new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+        try {
+            Dryer dryer = dryerService.findByDryerNumber(dryerReservationDto.getDryerNumber());
+            Student student = studentService.findByStudentNumber(dryerReservationDto.getStudentNumber());
+            dryerReservationService.cancelDryerReservation(student, dryer);
+            return new ResponseEntity<>(headers, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
+        }
+    }
 }

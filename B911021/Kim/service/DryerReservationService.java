@@ -30,9 +30,10 @@ public class DryerReservationService {
     public Dryer cancelDryerReservation(Student student, Dryer dryer) {
         Optional<DryerReservation> byStudentAndDryer = dryerReservationRepository.findByStudentAndDryer(student, dryer);
         if (byStudentAndDryer.isPresent()) {
-            DryerReservation DryerReservation = byStudentAndDryer.get();
-            student.cancelDryerReservation(DryerReservation);
-            dryer.cancel(DryerReservation);
+            DryerReservation dryerReservation = byStudentAndDryer.get();
+            dryerReservation.updateReservationStatusToCANCELED();
+            student.cancelDryerReservation(dryerReservation);
+            dryer.cancel(dryerReservation);
             return dryer;
         } else {
             throw new NoSuchElementException("해당 세탁기에 대한 예약이 존재하지 않습니다.");

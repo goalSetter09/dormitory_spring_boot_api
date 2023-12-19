@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class DryerReservation {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int rid;
+    private int id;
 
     @Column
     private LocalDateTime rTime;
@@ -25,14 +25,23 @@ public class DryerReservation {
     @JoinColumn(name = "did")
     private Dryer dryer;
 
+    @Enumerated(EnumType.STRING)
+    private ReservationStatus reservationStatus; // 예약의 상태 [RESERVED, CANCELED]
+
     //==생성 매서드==//
     public DryerReservation(LocalDateTime rTime, Student student, Dryer dryer) {
         this.rTime = rTime;
         this.student = student;
         this.dryer = dryer;
+        this.reservationStatus = ReservationStatus.RESERVED;
         student.getDryerReservations().add(this);
         student.updateDryerStudentStatusToRESERVE();
         dryer.getDryerReservations().add(this);
         dryer.updateAvailable(false);
+    }
+
+    //예약 상태 변경 매서드
+    public void updateReservationStatusToCANCELED() {
+        this.reservationStatus = ReservationStatus.CANCELED;
     }
 }

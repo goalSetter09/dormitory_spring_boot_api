@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -40,6 +41,15 @@ public class DryerService {
             return deleteDryer.getNumber();
         } else {
             throw new NullPointerException();
+        }
+    }
+
+    public Dryer findByDryerNumber(int number) {
+        Optional<Dryer> byNumber = dryerRepository.findByNumber(number);
+        if(byNumber.isPresent()) {
+            return byNumber.get();
+        } else {
+            throw new NoSuchElementException();
         }
     }
 
