@@ -47,6 +47,8 @@ public class Student {
         this.name = name;
         this.phone = phone;
         this.roomNum = roomNum;
+        washerStudentStatus = WasherStudentStatus.NONE;
+        dryerStudentStatus = DryerStudentStatus.NONE;
     }
 
     public static Student toStudentEntity(StudentDto studentDto) {

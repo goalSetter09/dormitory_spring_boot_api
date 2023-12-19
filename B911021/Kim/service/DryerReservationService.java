@@ -18,7 +18,7 @@ public class DryerReservationService {
 
     @Transactional
     public DryerReservation reserveDryer(Student student, Dryer dryer) {
-        if(dryer.isAvailable()) {
+        if(dryer.isAvailable() && student.getDryerStudentStatus().equals(DryerStudentStatus.NONE)) {
             DryerReservation dryerReservation = new DryerReservation(LocalDateTime.now(), student, dryer);
             return dryerReservationRepository.save(dryerReservation);
         } else {

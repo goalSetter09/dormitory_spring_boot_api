@@ -1,9 +1,6 @@
 package B911021.Kim.service;
 
-import B911021.Kim.entity.ReservationStatus;
-import B911021.Kim.entity.Student;
-import B911021.Kim.entity.Washer;
-import B911021.Kim.entity.WasherReservation;
+import B911021.Kim.entity.*;
 import B911021.Kim.repository.WasherReservationRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +18,7 @@ public class WasherReservationService {
 
     @Transactional
     public WasherReservation reserveWasher(Student student, Washer washer) {
-        if(washer.isAvailable()) {
+        if(washer.isAvailable() && student.getWasherStudentStatus().equals(WasherStudentStatus.NONE)) {
             //WasherReservation 실행 시 학생이랑 워셔 상태 다 업데이트 됨
             WasherReservation washerReservation = new WasherReservation(LocalDateTime.now(), student, washer);
             return washerReservationRepository.save(washerReservation);
